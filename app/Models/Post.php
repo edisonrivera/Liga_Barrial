@@ -12,10 +12,10 @@ class Post extends Model
         'title_post',
         'content_post',
         'image_post',
-        'code_secretary'
+        'code_president_team'
     ];
-    // public function secretary (){
-    //     return $this->belongsTo(Secretaries::class,'code_secretary','code_secretary');
-    // }
+    public function presidentTeam(){
+        return $this->belongsTo(PresidentTeam::class);
+    }
     
 }

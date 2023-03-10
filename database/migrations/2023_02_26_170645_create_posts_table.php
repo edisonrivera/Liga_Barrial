@@ -14,16 +14,9 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string("image_post");
-            $table ->unsignedBigInteger("user_id");
-            $table ->string("title_post");
-            $table ->text("content_post");
+            $table->string("title_post");
+            $table->text("content_post");
             $table->timestamps();
-
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
         });
     }
 

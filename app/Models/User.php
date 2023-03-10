@@ -59,11 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(PresidentTeam::class);
     }
-    // RELACIÓN DE UNO A UNO
-    public function secretaries()
-    {
-        return $this->hasOne(Secretaries::class,'id','user_id');
-    }
     // RELACIÓN DE UNO A UNOs
     public function players()
     {

@@ -29,13 +29,30 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'user_name' => ['required', 'string', 'max:15'],
-            'nickname_user' => ['required', 'string', 'max:15'],
+
+        $fields=([
+            'user_name' => ['required', 'string', 'max:15', 'min:2'],
+            'nickname_user' => ['required', 'string', 'max:15', 'min:5'],
             'surname_user' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', 'min:8' ,Rules\Password::defaults()],
         ]);
+
+        //! Mensajes de Error
+        $messages = [
+            'user_name.required' => 'El nombre es requerido',
+            'user_name.max' => 'El Nombre debe un máximo de 15 caracteres',
+            'user_name.min' => 'El Apellido debe un mínimo de 2 caracteres',
+            'surname_user.required' => 'El Apellido es requerido',
+            'email.unique' => "El Correo ya está en uso",
+            'password.confirmed' => "Las contraseñas no son las mismas",
+            'password.min' => "Las contraseña debe ser de 8 o más caracteres"
+        ];
+
+
+
+        $this->validate($request, $fields, $messages);
+
 
         $user = User::create([
             'user_name' => $request->user_name,

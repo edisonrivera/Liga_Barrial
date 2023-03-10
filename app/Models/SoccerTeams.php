@@ -37,11 +37,6 @@ class SoccerTeams extends Model
     {
         return $this->belongsTo(PresidentTeam::class);
     }
-    //RELACION DE UNO A UNO
-    public function secretary()
-    {
-        return $this->hasOne(Secretaries::class);
-    }
     //RELACION DE UNO A MUCHOS
     public function players()
     {
