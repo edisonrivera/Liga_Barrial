@@ -32,28 +32,42 @@ class PlayerAuthController extends Controller
     {
         //! Registro: Usuario
         $fields = ([
-            'user_name' => ['required', 'string', 'max:15'],
-            'nickname_user' => ['required', 'string', 'max:15'],
-            'surname_user' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'ci_player' => 'required|unique:players,ci_player|min:10|max:10',
+            'user_name' => ['required', 'alpha', 'max:15', 'min:2'],
+            'nickname_user' => ['required', 'string', 'max:10', 'min:5'],
+            'surname_user' => ['required', 'alpha', 'max:20'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', 'min:8' ,Rules\Password::defaults()],
+            'ci_player' => ['required', 'unique:players,ci_player', 'min:10', 'max:10'],
             'age' => ['required', 'numeric', 'min:18'],
             'born_date_player' => 'required|date',
+            'code_team' => 'required'
         ]);
 
         //! Mensajes de Error
         $messages = [
+            //! ====================== Validaciones Usuario ===========================
+            'user_name.required' => 'El nombre es requerido',
+            'user_name.max' => 'El Nombre debe tener un máximo de 15 caracteres',
+            'user_name.min' => 'El Apellido debe tener un mínimo de 2 caracteres',
+            'nickname_user.required' => 'El NickName es requerido',
+            'nickname_user.max' => 'El NickName debe tener un máximo de 15 caracteres',
+            'nickname_user.min' => 'El NickName debe tener un mínimo de 5 caracteres',
+            'surname_user.required' => 'El Apellido es requerido',
+            'email.unique' => "El Correo ya está en uso",
+            'password.confirmed' => "Las contraseñas no son las mismas",
+            'password.min' => "Las contraseña debe ser de 8 o más caracteres",
+            'user_name.alpha' => "El Nombre debe contener únicamente letras",
+            'surname_user.alpha' => "El Nombre debe contener únicamente letras",
+
+            //! ====================== Validaciones Jugador ===========================
             'ci_player.required' => "CI Del Jugador Requerido",
             'ci_player.min' => "CI Del Jugador Incorrecto",
             'ci_player.max' => "CI Del Jugador Incorrecto",
             'ci_player.unique' => "CI Ya Está En Uso",
-            'code_team.required' => "Code Team Del Jugador Requerido",
+            'code_team.required' => "Escoga un Equipo para el Jugador",
             'age.required' => "El Jugador Tiene Que Ser Mayor De Edad",
             'age.min' => "El Jugador Tiene Que Ser Mayor De Edad",
-            'born_date_player.required' => "Fecha N. Del Jugador Requerido",
-            'email.unique' => "El Correo ya está en uso",
-            'password.confirmed' => "Las contraseñas no son las mismas"
+            'born_date_player.required' => "Fecha de Nacimiento del Jugador Requerida",
         ];
 
         $this->validate($request, $fields, $messages);
@@ -74,7 +88,7 @@ class PlayerAuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'image' => $url,
-            'roles_id' => 3
+            'roles_id' => 4 //? 4 -> Jugador
         ]);
 
         event(new Registered($user));
@@ -91,6 +105,6 @@ class PlayerAuthController extends Controller
         ]);       
 
         event(new Registered($player));
-        return redirect('player/index')->with("message", "Jugador Creado");
+        return redirect('player/index')->with("message", "Jugador Creado ⚽");
     }
 }

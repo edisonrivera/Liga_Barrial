@@ -14,8 +14,8 @@
         <link rel="shortcut icon" href="{{asset('storage\icon.png')}}">
         <title>Bellavista | Verificar Email</title>
     </head>
-    <body style="font-family: 'Mochiy Pop One', sans-serif;" class='bg-slate-100'>
-        <div class="grid place-content-center py-52">
+    <body style="font-family: 'Mochiy Pop One', sans-serif;" class='bg-[url({{asset("/storage/verify-email-background.jpg")}})] bg-no-repeat bg-center bg-cover relative min-h-screen'>
+        <div class="grid place-content-center min-h-screen">
             <div class="card-body w-96 px-12 md:px-12 bg-slate-200 rounded-lg shadow-xl">
                 <h2 class="card-title px-2 text-blue-500">Gracias por registrarte!</h2>
                 <div class="mb-4">

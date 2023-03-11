@@ -18,7 +18,7 @@ class PresidentTeam extends Model
     *
     * @var string
     */
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'status'];
     // RELACIÓN DE UNO A UNO
     public function user()
     {

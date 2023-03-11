@@ -2,6 +2,24 @@
 @section('subtitle', 'Registro')
 @section('content')
 <!-- component -->
+    <div class="absolute mx-auto py-40">
+        <div class="flex justify-center px-6">
+            @if(count($errors)>0)
+                <div class="alert alert-error shadow-lg">
+                    <div>
+                        <ul>
+                            @foreach( $errors -> all() as $error)
+                            <li class="flex flex-row">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span class="px-4">{{$error}}</span>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
     <!-- Container -->
     <div class="container mx-auto py-40">
         <div class="flex justify-center px-6">
@@ -29,7 +47,8 @@
                                     placeholder="Ej. Carlos"
                                     name="user_name"
                                     required
-                                    maxlength="10"
+                                    maxlength="15"
+                                    onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
                                 />
                             </div>
 
@@ -44,7 +63,8 @@
                                     placeholder="Ej. Oliveira"
                                     name="surname_user"
                                     required
-                                    maxlength="15"
+                                    maxlength="20"
+                                    onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) )"
                                 />
                             </div>
 

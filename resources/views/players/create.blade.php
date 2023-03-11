@@ -1,25 +1,25 @@
 @extends('layouts.layout')
 @section('subtitle', 'Registro Jugador')
 @section('content')
-<div class="px-96 mx-64 pt-5">
-@if(count($errors)>0)
-    <div class="alert alert-error shadow-lg">
-        <div>
-            <ul>
-                @foreach( $errors -> all() as $error)
-                <li class="flex flex-row">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span class="px-4">{{$error}}</span>
-                </li>
-                @endforeach
-            </ul>
+<div class="absolute px-10 md:px-80 lg:px-auto pt-4">
+    @if(count($errors)>0)
+        <div class="alert alert-error shadow-lg">
+            <div>
+                <ul>
+                    @foreach( $errors -> all() as $error)
+                    <li class="flex flex-row">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span class="px-4">{{$error}}</span>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
-@endif
+    @endif
 </div>
 <!-- component -->
     <!-- Container -->
-    <div class="container mx-auto py-12">
+    <div class="container mx-auto py-20">
         <div class="flex justify-center px-6">
             <!-- Row -->
             <div class="w-full xl:w-3/4 lg:w-11/12 flex">
@@ -46,7 +46,8 @@
                                     placeholder="Ej. Carlos"
                                     name="user_name"
                                     required
-                                    maxlength="12"
+                                    maxlength="15"
+                                    onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) )"
                                 />
                             </div>
 
@@ -61,7 +62,8 @@
                                     placeholder="Ej. Oliveira"
                                     name="surname_user"
                                     required
-                                    maxlength="15"
+                                    maxlength="20"
+                                    onkeypress="return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) )"
                                 />
                             </div>
 
@@ -105,6 +107,8 @@
                                     name="ci_player"
                                     placeholder="175432...."
                                     required
+                                    maxlength="10"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                 />
                             </div>
                         </div>
@@ -125,10 +129,12 @@
                                 <input
                                     class="w-1/3 px-3 py-2 mb-3 text-sm leading-tight text-black bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                     id="age"
-                                    type="number"
+                                    type="text"
                                     name="age"
                                     placeholder="+18"
+                                    maxlength="2"
                                     required
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                 />
                             </div>
                             <div class="flex md:ml-3">
@@ -195,7 +201,7 @@
                         <div class="text-center">
                             <a
                                 class="inline-block text-sm text-teal-600 align-baseline hover:text-teal-800"
-                                href="{{ route('admin.index') }}"
+                                href="{{ route('player.index') }}"
                             >
                                 Vuelve al Inicio
                             </a>

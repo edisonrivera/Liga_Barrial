@@ -31,7 +31,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
 </style>
 
 <!-- Navbar start -->
-<nav id="navbar" class="fixed top-0 z-40 flex w-full flex-row justify-center bg-cyan-600 px-4 sm:justify-between">
+<nav id="navbar" class="fixed top-0 z-40 flex w-full flex-row justify-center bg-cyan-600 pl-4 sm:justify-between">
     <button id="btnSidebarToggler" type="button" class="py-4 text-2xl text-white hover:text-gray-200">
         <svg id="navClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="h-9 w-9">
@@ -55,23 +55,27 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
         </div> 
     @endguest 
     @auth
-    @if(Auth::user()->roles_id == 1 )
+    <div class="grid grid-cols-2 justify-items-center">
+        @if(Auth::user()->roles_id == 1)
+            <div class="my-7">
+                <a href="{{route('admin.index')}}" class="btn bg-blue-500 border-none hover:bg-blue-400 text-white place-self-center sm:text-sm text-xs">Panel <br>Administrativo</a>
+            </div>
+        @endif  
         <div>
-            <a href="{{route('admin.index')}}" class="btn bg-blue-500 border-none hover:bg-blue-400 text-white sm:mx-3 place-self-center sm:text-sm text-xs">Panel Administrativo</a>
-        </div>
-    @endif    
-    <div class="grid">
-        <a href="{{route('profile.edit')}}" class="btn bg-teal-500 border-none hover:bg-teal-400 text-white sm:mx-3 place-self-center sm:text-sm text-xs">Editar Perfil</a>
-        
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
+            <a href="{{route('profile.edit')}}" class="btn my-1 bg-teal-500 border-none hover:bg-teal-400 text-white place-self-center sm:text-sm text-xs">Editar Perfil</a>
+            
+            <div class="flex justify-center">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
 
-            <x-responsive-nav-link :href="route('logout')"
-                    onclick="event.preventDefault();
-                                this.closest('form').submit();" class="btn text-center bg-red-400 hover:bg-red-500">
-                <p class="text-white">Salir</p>
-            </x-responsive-nav-link>
-        </form>
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();" class="btn text-center bg-red-400 hover:bg-red-500">
+                        <p class="text-white">Salir</p>
+                    </x-responsive-nav-link>
+                </form>
+            </div>
+        </div>
     </div>
     @endauth
 

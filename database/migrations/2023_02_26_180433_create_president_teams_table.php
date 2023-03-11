@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('president_teams', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id")->unique();
+            $table->smallInteger("status")->default(0)->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')

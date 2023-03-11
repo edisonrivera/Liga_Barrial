@@ -12,18 +12,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('storage\icon.png')}}">
-    <title>Bellavista | @yield('subtitle')</title>
+    <title>Bellavista | Registro Jugador</title>
 </head>
-<body style="font-family: 'Mochiy Pop One', sans-serif;" class='bg-[url({{asset("/storage/form-background.jpg")}})] bg-no-repeat bg-center bg-cover relative min-h-screen'>
+{{--? class='bg-[url({{asset("/storage/form-background.jpg")}})] bg-no-repeat bg-center bg-cover relative min-h-screen --}}
+<body style="font-family: 'Mochiy Pop One', sans-serif;">
     <main>
         
+        <a href="{{ route('admin.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
+            Panel Administrativo
+        </a>
         @if (Session::has('message'))
-            <div class="p-4 mb-4 mx-12 mt-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
-                <span class="font-medium">{{ Session::get('message') }} </span> 
+        <div class="mx-96 px-48 pt-3">
+            <div class="p-4 mb-4 mt-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
+                <span class="font-bold text-1xl">{{ Session::get('message') }} </span> 
             </div>
+        </div>
         @endif
-        <a href="{{ route('player.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">CREAR UN JUGADOR</a>
-        <a href="{{ route('admin.index') }}" class="btn btn-primary transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">Volver al Panel Administrativo</a>
+        <div class="flex justify-end px-10">
+            <a href="{{ route('player.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
+                <img src=" {{ url('/storage/add_player.png') }}"/>
+            </a>
+        </div>
         @foreach ($players as $email_player => $user_name_player)
         <div class="p-12 mx-12">      
             <div class="card h-96 card-side glass hover:backdrop-saturate-50 hover:bg-white/30 hover:text-neutral-700 shadow-xl w-full">        
