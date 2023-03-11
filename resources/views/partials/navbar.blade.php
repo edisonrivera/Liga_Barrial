@@ -125,20 +125,20 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                 <ul class="mb-8 text-sm font-medium">
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="{{ asset("teams") }}">
+                            href="{{ route("teams.index") }}">
                             <span class="select-none">Equipos</span>
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="#privacy">
+                            href="{{ route('player.index') }}">
                             <span class="select-none">Jugadores</span>
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div class="px-4 pb-4">
+            {{-- <div class="px-4 pb-4">
                 <h3 class="mb-2 text-xs font-medium uppercase text-gray-200">
                     Otros
                 </h3>
@@ -156,7 +156,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                         </a>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
 
             <div class="px-4 pb-4">
                 <h3 class="mb-2 text-xs font-medium uppercase text-gray-200">
@@ -165,7 +165,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                 <ul class="mb-8 text-sm font-medium">
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="#ex1">
+                            href="https://www.facebook.com/profile.php?id=100045912801611" target="_blank">
                             <span class="select-none">Facebook</span>
                         </a>
                     </li>
@@ -177,7 +177,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="#ex2">
+                            href="https://www.youtube.com/channel/UCiUV-m2Kg-MezpRxlAxo3Ag" target="_blank">
                             <span class="select-none">YouTube</span>
                         </a>
                     </li>

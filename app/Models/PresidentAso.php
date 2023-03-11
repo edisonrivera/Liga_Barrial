@@ -20,6 +20,9 @@ class PresidentAso extends Model
     * @var string
     */
 
+
+    protected $fillable = ['user_id'];
+
     // RELACIÓN DE UNO A UNO
     public function user()
     {

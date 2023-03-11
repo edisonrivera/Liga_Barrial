@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\PresidentTeam;
+use App\Models\PresidentAso;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -13,36 +13,22 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Collection;
 
-class presidentTeamController extends Controller
+class PresidentAsoController extends Controller
 {
     public function index(){
-        $presidents = DB::table('president_teams')
-                        ->join('users', 'users.id', '=', 'president_teams.user_id')
-                        ->pluck('users.user_name', 'users.email');
+        $president_aso = DB::table('president_asos')
+                        ->join('users', 'users.id', '=', 'president_asos.user_id')
+                        ->pluck(DB::raw("CONCAT(users.user_name, ' ', users.surname_user) AS full_name"), 'users.email');
 
-        $teams = DB::table('president_teams')
-                        ->join('soccer_teams', 'soccer_teams.president_team', '=', 'president_teams.id')
-                        ->pluck('soccer_teams.name_team');
-
-        $data_show = new Collection();
-        $init = 0;
-        foreach($presidents as $user_name => $email){
-            $data_show->put($user_name, [$email, isset($teams[$init]) ? $teams[$init] : 'Sin Equipo']);
-            $init++;
-        };
-
-
-        return view('president_teams.index', ['presidents_teams' => $data_show]);
+        return view('president_aso.index', ['president_aso' => $president_aso]);
     }
 
     public function create(){
-        return view('president_teams.create');
+        return view('president_aso.create');
     }
 
-    public function store(Request $request): RedirectResponse
-    {
+    public function store(Request $request){
         $fields=([
             'user_name' => ['required', 'alpha', 'max:15', 'min:2'],
             'surname_user' => ['required', 'alpha', 'max:20'],
@@ -65,33 +51,24 @@ class presidentTeamController extends Controller
 
         $this->validate($request, $fields, $messages);
 
-
-        // if($request->image){
-        //     $image = $request->image;
-        //     $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_posts','public_id'=>uniqid()]);
-        //     $url = $result->getSecurePath();
-        // }else{
-        //     $url=null;
-        // }
-
         $user = User::create([
             'user_name' => $request->user_name,
             'surname_user' => $request->surname_user,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'roles_id' => 2 //? 2 -> Presidentes de Equipos
+            'roles_id' => 3 //? 3 -> Presidente de Asociación
         ]);
 
         event(new Registered($user));
 
-        $user_previous_created = User::where('email', $user->email);
-        $user_id = $user_previous_created->id;
+        $user_previous_created = User::where('email', $user->email)->get();
+        $user_id = $user_previous_created[0]->id;
 
-        $president_team = PresidentTeam::create([
+        $president_aso = PresidentAso::create([
             'user_id' => $user_id,
         ]);       
 
-        event(new Registered($president_team));
-        return redirect('president/index')->with("message", "Presidente de Equipo Creado! 👨‍💻");
+        event(new Registered($president_aso));
+        return redirect('presidentaso/index')->with("message", "Presidente de Asociación Creado! 👨‍💻");
     }
 }

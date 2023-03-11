@@ -72,7 +72,6 @@ class PlayerAuthController extends Controller
 
         $this->validate($request, $fields, $messages);
 
-
         if($request->image){
             $image = $request->image;
             $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_posts','public_id'=>uniqid()]);

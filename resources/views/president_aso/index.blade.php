@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('storage\icon.png')}}">
-    <title>Bellavista | Presidente Equipo</title>
+    <title>Bellavista | Presidente Asociación Equipo</title>
 </head>
 <body style="font-family: 'Mochiy Pop One', sans-serif; background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png');">
     <main class="h-screen">
@@ -28,26 +28,26 @@
             </div>
             @endif
             <div class="flex justify-end px-10">
-                <a href="{{ route('president.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
-                    <img src=" {{ url('/storage/add_president_team.png') }}"/>
+                <a href="{{ route('presidentaso.create') }}" class="btn btn-secondary bg-accent transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-gray-400 duration-100 my-10 h-20 border-none rounded-md">
+                    <img src=" {{ url('/storage/add_president_aso.png') }}"/>
                 </a>
             </div>
         @endif
         @if(Auth::check() && Auth::user()->roles_id != 1)
-        <a href="{{ route('teams.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
+        <a href="{{ route('presidentaso.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
 
         @guest
-        <a href="{{ route('teams.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
+        <a href="{{ route('presidentaso.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endguest
         
 
-        <h1 class="font-bold text-3xl text-center text-gray-500">Presidentes De Equipos</h1>
-        @if(count($presidents_teams) > 0)
+        <h1 class="font-bold text-3xl text-center text-gray-500">Presidente de Asociación</h1>
+        @if(count($president_aso) > 0)
         <div class="overflow-x-auto w-full px-10 pt-4">
             <table class="table w-full">
             <thead>
@@ -55,12 +55,11 @@
                 <th></th>
                 <th>Nombre</th>
                 <th>Correo</th>
-                <th>Equipo</th>
                 <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($presidents_teams as $user_name => $data)
+                @foreach ($president_aso as $user_name => $email)
                     <tr>
                         <td>
                             <div class="flex items-center space-x-3 px-10">
@@ -73,17 +72,14 @@
                             </div>
                         </td>
                         <td>
-                            {{ $data[0] }}
+                            {{ $email }}
                             <br/>
-                            <span class="badge badge-primary bagde-md badge-sm bg-color-secondary">Presidente de $Equipo</span>
+                            <span class="badge badge-primary bagde-md badge-sm bg-color-secondary">Presidente de Liga Barrial Bellavista</span>
                         </td>
                         <td>
                             <div>
                                 <div class="font-normal">{{ $user_name }}</div>
                             </div>
-                        </td>
-                        <td>
-                            {{ $data[1] }}
                         </td>
                         <td>
                             <button class="btn btn-ghost btn-xs">$Acciones</button>
@@ -94,7 +90,7 @@
             </table>
         </div>
         @else
-            <h3 class="font-bold text-3xl text-center text-red-500 py-20">No existen Presidentes de Equipos Aún 🤵</h3>
+            <h3 class="font-bold text-3xl text-center text-red-500 py-20">No existe Presidente de Asociación 🧔</h3>
         @endif
     </main>
 </body>

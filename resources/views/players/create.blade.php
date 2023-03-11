@@ -31,7 +31,7 @@
                 <!-- Col -->
                 
                 <div class="w-full lg:w-7/12 bg-sky-200 p-5 rounded-lg lg:rounded-l-none bg-opacity-80">
-                    <h3 class="pt-4 text-2xl text-center text-sky-900">Registro de Jugador</h3>
+                    <h3 class="pt-4 text-2xl text-center text-sky-900 font-bold">Formulario de Registro ⚽</h3>
                     <form class="px-8 pt-6 pb-8 bg-sky-200 bg-opacity-10 rounded" method="POST" action="{{ route('player.register') }}">
                         @csrf
                         <div class="mb-4 md:flex md:justify-between">
@@ -192,7 +192,7 @@
                                 class="w-full px-4 py-2 font-bold text-white bg-orange-500 rounded-full hover:bg-orange-600 focus:outline-none focus:shadow-outline"
                                 type="submit"
                             >
-                                Registrar Cuenta
+                                Registrar
                             </button>
                         </div>
                         <hr class="border-t bg-white" />

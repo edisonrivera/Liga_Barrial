@@ -64,4 +64,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Players::class);
     }
+    // RELACIÓN DE UNO A UNO
+    public function roles()
+    {
+        return $this->hasOne(Roles::class);
+    }
 }
