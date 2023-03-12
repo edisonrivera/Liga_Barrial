@@ -96,6 +96,16 @@ class PlayerAuthController extends Controller
         $url = $result->getSecurePath();
         $public_id = $result->getPublicId();
 
+        $loggedUser = Auth::user();
+        $loggedUserId = $loggedUser->id;
+        $presidentTeams = PresidentTeam::where('user_id', $loggedUserId)->pluck('id');
+
+        $team = SoccerTeams::where('president_team', $presidentTeams)->pluck('code_soccer_team')->values();
+        if (count($team) == 0){
+            return redirect('player/index')->with("error", "No Tienes un equipo asignado | El Presidente de Asociación tiene que asignarte uno 🤚");
+        } else {
+            $team = SoccerTeams::where('president_team', $presidentTeams)->pluck('code_soccer_team')->values()[0];
+        }
 
         $user = User::create([
             'user_name' => $request->user_name,
@@ -113,11 +123,6 @@ class PlayerAuthController extends Controller
         $user_previous_created = User::where('email', $user->email)->get();
         $user_id = $user_previous_created[0]->id;
 
-
-        $loggedUser = Auth::user();
-        $loggedUserId = $loggedUser->id;
-        $presidentTeams = PresidentTeam::where('user_id', $loggedUserId)->pluck('id');
-        $team = SoccerTeams::where('president_team', $presidentTeams)->pluck('code_soccer_team')->values()[0];
 
         $player = Players::create([
             'ci_player' => $request->ci_player, 

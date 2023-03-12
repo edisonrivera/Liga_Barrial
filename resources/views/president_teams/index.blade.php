@@ -20,24 +20,32 @@
             <a href="{{ route('admin.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Panel Administrativo
             </a>
-            @if (Session::has('message'))
+            {{-- <div class="flex justify-end px-10">
+                <a href="{{ route('president.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
+                    <img src=" {{ url('/storage/add_president_team.png') }}"/>
+                </a>
+            </div> --}}
+        @endif
+        @if (Session::has('message'))
             <div class="mx-96 px-48 pt-3">
                 <div class="p-4 mb-4 mt-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800" role="alert">
                     <span class="font-bold text-1xl">{{ Session::get('message') }} </span> 
                 </div>
             </div>
-            @endif
-            <div class="flex justify-end px-10">
-                <a href="{{ route('president.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
-                    <img src=" {{ url('/storage/add_president_team.png') }}"/>
-                </a>
-            </div>
         @endif
-        @if(Auth::check() && Auth::user()->roles_id != 1)
+        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2 && Auth::user()->roles_id != 3)
         <a href="{{ route('teams.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
+
+        @if(Auth::check() && Auth::user()->roles_id == 2 || Auth::check() && Auth::user()->roles_id == 3)
+            <a href="{{ route('dashboard') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
+                Volver Al Inicio
+            </a>
+        @endif
+
+
 
         @guest
         <a href="{{ route('teams.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
