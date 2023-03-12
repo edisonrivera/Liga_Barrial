@@ -11,28 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('soccer_teams', function (Blueprint $table){
-            $table->string('code_soccer_team',10)->primary()->unique()->unique();
+        Schema::create('soccer_teams', function (Blueprint $table) {
+            $table->string('code_soccer_team',10)->primary();
             $table->string('name_team');
-            $table->unsignedBigInteger('president_team')->nullable();
+            $table->unsignedBigInteger('president_team')->unique();
             $table->string('logo_team');
-            $table->string('public_id');
             $table->date('fundation_date_team');
-            $table->string('description_team');
-            $table->tinyInteger('puntaje_team')->default(0)->unsigned();
-            $table->tinyInteger('puntos_team')->default(0)->unsigned();
-            $table->tinyInteger('gf_team')->default(0)->unsigned();
-            $table->tinyInteger('gd_team')->default(0)->unsigned();
-            $table->tinyInteger('gc_team')->default(0)->unsigned();
-            $table->tinyInteger('pg_team')->default(0)->unsigned();
-            $table->tinyInteger('pp_team')->default(0)->unsigned();
-            $table->tinyInteger('pe_team')->default(0)->unsigned();
             $table->timestamps();
 
             $table->foreign('president_team')
                   ->references('id')
                   ->on('president_teams')
-                  ->onDelete('set null')
+                  ->onDelete('cascade')
                   ->onUpdate('cascade');
         });
     }

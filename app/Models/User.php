@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+// use Illuminate\Database\Eloquent\Model\Post;
+// use Illuminate\Database\Eloquent\Model\PresidentAso;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -24,8 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'nickname_user',
         'roles_id',
-        'avatar',
-        'public_id'
+        'image'
     ];
 
     /**
@@ -55,16 +57,11 @@ class User extends Authenticatable implements MustVerifyEmail
     // RELACIÓN DE UNO A UNO
     public function presidentTeam()
     {
-        return $this->hasOne(PresidentTeam::class, 'id', 'user_id');
+        return $this->hasOne(PresidentTeam::class);
     }
     // RELACIÓN DE UNO A UNOs
     public function players()
     {
         return $this->hasOne(Players::class);
-    }
-    // RELACIÓN DE UNO A UNO
-    public function roles()
-    {
-        return $this->hasOne(Roles::class);
     }
 }

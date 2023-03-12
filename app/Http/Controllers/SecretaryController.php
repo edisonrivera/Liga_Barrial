@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\PresidentTeam;
+use App\Models\Secretaries;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -14,18 +14,20 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class presidentTeamController extends Controller
+class SecretaryController extends Controller
 {
     public function index(){
-        $presidents = DB::table('president_teams')
-                        ->join('users', 'users.id', '=', 'president_teams.user_id')
+        $secretaries = DB::table('secretaries')
+                        ->join('users', 'users.id', '=', 'secretaries.user_id')
                         ->pluck('users.user_name', 'users.email');
 
-        return view('president_teams.index', ['presidents_teams' => $presidents]);
+        return view('secretaries.index', ['secretaries' => $secretaries]);
     }
 
+
     public function create(){
-        return view('president_teams.create');
+        $teams = DB::table('soccer_teams')->pluck('name_team', 'code_soccer_team');
+        return view('secretaries.create', ['teams' => $teams]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -35,13 +37,15 @@ class presidentTeamController extends Controller
             'user_name' => ['required', 'string', 'max:15'],
             'surname_user' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()]
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'code_team' => ['required'],
         ]);
 
         //! Mensajes de Error
         $messages = [
             'email.unique' => "El Correo ya está en uso",
             'password.confirmed' => "Las contraseñas no son las mismas",
+            'code_team.required' => "Eliga Un Equipo",
         ];
 
         $this->validate($request, $fields, $messages);
@@ -68,11 +72,13 @@ class presidentTeamController extends Controller
         $user_previous_created = User::where('email', $user->email);
         $user_id = $user->id;
 
-        $president_team = PresidentTeam::create([
+        $secretary = Secretaries::create([
             'user_id' => $user_id,
+            'code_team' => $request->input("teams"),
         ]);       
 
-        event(new Registered($president_team));
-        return redirect('president/index')->with("message", "Presidente de Equipo Creado Creado! 👨‍💻");
+        event(new Registered($secretary));
+        return redirect('secretaries/index')->with("message", "Secretario Creado! 👨‍💻");
     }
+
 }

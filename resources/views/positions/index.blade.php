@@ -16,21 +16,39 @@
 </head>
  {{-- class='bg-[url({{asset("/storage/form-background.jpg")}})] bg-no-repeat bg-center bg-cover relative min-h-screen' --}}
 <body style="font-family: 'Mochiy Pop One', sans-serif;">
-  <div class="grid gap-4 place-content-center h-screen grid-cols-4 md:grid-cols-3 lg:grid-cols-2">
-    <a href="{{ route('teams.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">CREAR UN EQUIPO</button>
-      <a href="{{ route('admin.index') }}" class="btn btn-primary transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300">Volver al Panel Administrativo</a>
-    @foreach ($teams as $description_team => $name_team)
-    <div class="card w-96 bg-primary shadow-xl">
-        <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-        <div class="card-body">
-          <h2 class="card-title">{{ $name_team }}</h2>
-          <p>{{ $description_team }}</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-secondary">Buy Now</button>
-          </div>
-        </div>
-    </div>
-    @endforeach
-  <div>
+<table>
+    <thead>
+        <tr>
+            <th>Posición</th>
+            <th>Equipo</th>
+            <th>Puntos</th>
+            <th>PJ</th>
+            <th>PG</th>
+            <th>PE</th>
+            <th>PP</th>
+            <th>GF</th>
+            <th>GC</th>
+            <th>DG</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($positions as $position)
+        <tr>
+            <td>{{ $position->position_team }}</td>
+            <td>{{ $position->soccer_team->name_team }}</td>
+            <td>{{ $position->puntos_team }}</td>
+            <td>{{ $position->pjugados_team }}</td>
+            <td>{{ $position->pg_team }}</td>
+            <td>{{ $position->pe_team }}</td>
+            <td>{{ $position->pp_team }}</td>
+            <td>{{ $position->gf_team }}</td>
+            <td>{{ $position->gc_team }}</td>
+            <td>{{ $position->gd_team }}</td>
+            
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 </body>
 </html>

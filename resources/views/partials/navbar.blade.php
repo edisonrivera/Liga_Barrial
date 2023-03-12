@@ -31,7 +31,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
 </style>
 
 <!-- Navbar start -->
-<nav id="navbar" class="fixed top-0 z-40 flex w-full flex-row justify-center bg-cyan-600 pl-4 sm:justify-between">
+<nav id="navbar" class="fixed top-0 z-40 flex w-full flex-row justify-center bg-cyan-600 px-4 sm:justify-between">
     <button id="btnSidebarToggler" type="button" class="py-4 text-2xl text-white hover:text-gray-200">
         <svg id="navClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="h-9 w-9">
@@ -55,27 +55,23 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
         </div> 
     @endguest 
     @auth
-    <div class="grid grid-cols-2 justify-items-center">
-        @if(Auth::user()->roles_id == 1)
-            <div class="my-7">
-                <a href="{{route('admin.index')}}" class="btn bg-blue-500 border-none hover:bg-blue-400 text-white place-self-center sm:text-sm text-xs">Panel <br>Administrativo</a>
-            </div>
-        @endif  
+    @if(Auth::user()->roles_id == 1 )
         <div>
-            <a href="{{route('profile.edit')}}" class="btn my-1 bg-teal-500 border-none hover:bg-teal-400 text-white place-self-center sm:text-sm text-xs">Editar Perfil</a>
-            
-            <div class="flex justify-center">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();" class="btn text-center bg-red-400 hover:bg-red-500">
-                        <p class="text-white">Salir</p>
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+            <a href="{{route('admin.index')}}" class="btn bg-blue-500 border-none hover:bg-blue-400 text-white sm:mx-3 place-self-center sm:text-sm text-xs">Panel Administrativo</a>
         </div>
+    @endif    
+    <div class="grid">
+        <a href="{{route('profile.edit')}}" class="btn bg-teal-500 border-none hover:bg-teal-400 text-white sm:mx-3 place-self-center sm:text-sm text-xs">Editar Perfil</a>
+        
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();" class="btn text-center bg-red-400 hover:bg-red-500">
+                <p class="text-white">Salir</p>
+            </x-responsive-nav-link>
+        </form>
     </div>
     @endauth
 
@@ -103,14 +99,18 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="#link1">
+                            href="{{ route('positions.index') }}">
                             <span class="select-none">Tabla de Posiciones</span>
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="#link1">
+                            
+                        href="#link1">
+                            
                             <span class="select-none">Campeonatos</span>
+                            
+        
                         </a>
                     </li>
                 </ul>
@@ -125,20 +125,20 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                 <ul class="mb-8 text-sm font-medium">
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="{{ route("teams.index") }}">
+                            href="#link1">
                             <span class="select-none">Equipos</span>
                         </a>
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="{{ route('player.index') }}">
+                            href="#privacy">
                             <span class="select-none">Jugadores</span>
                         </a>
                     </li>
                 </ul>
             </div>
 
-            {{-- <div class="px-4 pb-4">
+            <div class="px-4 pb-4">
                 <h3 class="mb-2 text-xs font-medium uppercase text-gray-200">
                     Otros
                 </h3>
@@ -156,7 +156,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                         </a>
                     </li>
                 </ul>
-            </div> --}}
+            </div>
 
             <div class="px-4 pb-4">
                 <h3 class="mb-2 text-xs font-medium uppercase text-gray-200">
@@ -165,7 +165,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                 <ul class="mb-8 text-sm font-medium">
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="https://www.facebook.com/profile.php?id=100045912801611" target="_blank">
+                            href="#ex1">
                             <span class="select-none">Facebook</span>
                         </a>
                     </li>
@@ -177,7 +177,7 @@ Change class "fixed" to "sticky" in "navbar" (l. 33) so the navbar doesn't hide 
                     </li>
                     <li>
                         <a class="flex items-center rounded py-3 pl-3 pr-4 text-gray-50 hover:bg-gray-600"
-                            href="https://www.youtube.com/channel/UCiUV-m2Kg-MezpRxlAxo3Ag" target="_blank">
+                            href="#ex2">
                             <span class="select-none">YouTube</span>
                         </a>
                     </li>
