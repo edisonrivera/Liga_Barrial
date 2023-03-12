@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tournament extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
     public function presidentAso()
     {
         return $this->belongsTo(PresidentAso::class);
