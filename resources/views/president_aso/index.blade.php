@@ -55,24 +55,26 @@
                 <th></th>
                 <th>Nombre</th>
                 <th>Correo</th>
+                @if(Auth::check() && Auth::user()->roles_id == 1)
                 <th>Acciones</th>
+                @endif
                 </tr>
             </thead>
             <tbody>
-                @foreach ($president_aso as $user_name => $email)
+                @foreach ($president_aso as $user_name => $data)
                     <tr>
                         <td>
-                            <div class="flex items-center space-x-3 px-10">
+                            <div class="flex items-center">
                                 <div class="avatar">
-                                    <div class="mask mask-squircle w-12 h-12">
-                                    <img src="/tailwind-css-component-profile-2@56w.png"/>
+                                    <div class="mask mask-squircle w-36 h-36">
+                                    <img src="{{ $data[1] }}"/>
                                     </div>
                                 </div>
                             
                             </div>
                         </td>
                         <td>
-                            {{ $email }}
+                            {{ $data[0] }}
                             <br/>
                             <span class="badge badge-primary bagde-md badge-sm bg-color-secondary">Presidente de Liga Barrial Bellavista</span>
                         </td>
@@ -81,9 +83,16 @@
                                 <div class="font-normal">{{ $user_name }}</div>
                             </div>
                         </td>
-                        <td>
-                            <button class="btn btn-ghost btn-xs">$Acciones</button>
-                        </td>
+                        @if(Auth::check() && Auth::user()->roles_id == 1)
+                            <td>
+                                <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                    Editar
+                                </a>
+                                <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-28 px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:bg-red-600 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                    Eliminar
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

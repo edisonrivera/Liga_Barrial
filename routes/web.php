@@ -10,7 +10,7 @@ use App\Http\Controllers\SecretaryController;
 use App\Http\Controllers\presidentTeamController;
 use App\Http\Controllers\PresidentAsoController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,9 +23,7 @@ use App\Http\Controllers\AdminController;
 */
 Route::get('/teams', [TeamsController::class, 'viewMatches'])->name('teams');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -43,29 +41,49 @@ Route::get('president/index', [presidentTeamController::class, 'index'])->name('
 Route::get('player/index', [PlayerAuthController::class, 'index'])->name('player.index');
 Route::get('/teams/index',[TeamsController::class, 'index'])->name('teams.index');
 
-Route::middleware(['auth', 'rol:1'])->group(function () {
-    //! ========================================== SECRETARIOS ===========================================
-    Route::get('secretaries/index', [SecretaryController::class, 'index'])->name('secretaries.index');
-    Route::post('secretaries/create', [SecretaryController::class, 'store'])->name('secretaries.register');
-    Route::get('secretaries/create', [SecretaryController::class, 'create'])->name('secretaries.create');
 
-    //! ====================================== PRESIDENTE EQUIPO ==========================================
+//! ADMINISTRADOR
+Route::middleware(['auth', 'rol:1'])->group(function () {
+    //? ====================================== PRESIDENTE EQUIPO ==========================================
     Route::post('president/create', [presidentTeamController::class, 'store'])->name('president.register');
     Route::get('president/create', [presidentTeamController::class, 'create'])->name('president.create');
 
-    //! ========================================== EQUIPOS ================================================
+    //? ========================================== EQUIPOS ================================================
     Route::post('/teams/create',[TeamsController::class, 'store'])->name('teams.register');
     Route::get('/teams/create',[TeamsController::class, 'create'])->name('teams.create');
 
-    //! ========================================== ADMIN ================================================
+    //? ========================================== ADMIN ================================================
     Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
 
-    //! ========================================== JUGADOR =======================================
+    //? ========================================== JUGADOR =======================================
     Route::post('player/create', [PlayerAuthController::class, 'store'])->name('player.register');
     Route::get('player/create', [PlayerAuthController::class, 'create'])->name('player.create');
 
-    //! ====================================== PRESIDENTE ASO ==========================================
+    //? ====================================== PRESIDENTE ASO ==========================================
     Route::get('presidentaso/index', [presidentAsoController::class, 'index'])->name('presidentaso.index');
     Route::post('presidentaso/create', [presidentAsoController::class, 'store'])->name('presidentaso.register');
     Route::get('presidentaso/create', [presidentAsoController::class, 'create'])->name('presidentaso.create');
+});
+
+//! PRESIDENTE EQUIPOS
+Route::middleware(['auth', 'rol:2'])->group(function () {
+    //? ========================================== JUGADOR =======================================
+    Route::post('player/create', [PlayerAuthController::class, 'store'])->name('player.register');
+    Route::get('player/create', [PlayerAuthController::class, 'create'])->name('player.create');
+});
+
+//! PRESIDENTE ASOCIACIÓN
+Route::middleware(['auth', 'rol:3'])->group(function () {
+    //? ========================================== JUGADOR =======================================
+    Route::post('/teams/create',[TeamsController::class, 'store'])->name('teams.register');
+    Route::get('/teams/create',[TeamsController::class, 'create'])->name('teams.create');
+
+    //? ====================================== PRESIDENTE EQUIPO ==========================================
+    Route::post('president/create', [presidentTeamController::class, 'store'])->name('president.register');
+    Route::get('president/create', [presidentTeamController::class, 'create'])->name('president.create');
+});
+
+//! JUGADOR
+Route::middleware(['auth', 'rol:4'])->group(function () {
+    
 });

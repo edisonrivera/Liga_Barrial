@@ -150,15 +150,16 @@
                                     required
                                 />
                             </div>
-                        </div>  
-                        <div class="mb-4 md:flex md:justify-center">
+                        </div>
+
+                        {{-- <div class="mb-4 md:flex md:justify-center">
                             <select name="code_team" class="select select-info w-full max-w-xs bg-white text-black">
                                 <option disabled selected>Equipo al que pertenece</option>
                                 @foreach ($teams as $code_soccer_team => $name_team)
                                     <option value="{{ $code_soccer_team }}">{{ $name_team }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-4 md:flex md:justify-between">
                             <div class="mb-4 md:mr-2 md:mb-0">
@@ -199,12 +200,24 @@
                         
                         <hr class="border-t bg-white mb-7" />
                         <div class="text-center">
-                            <a
-                                class="inline-block text-sm text-teal-600 align-baseline hover:text-teal-800"
-                                href="{{ route('player.index') }}"
-                            >
-                                Vuelve al Inicio
-                            </a>
+                            @if(Auth::check() && Auth::user()->roles_id == 1)
+                                <a
+                                    class="inline-block text-sm text-teal-600 align-baseline hover:text-teal-800"
+                                    href="{{ route('player.index') }}"
+                                >
+                                    Vuelve al Inicio
+                                </a>
+                            @endif
+                            @if(Auth::check() && Auth::user()->roles_id == 2)
+                                <a
+                                    class="inline-block text-sm text-teal-600 align-baseline hover:text-teal-800"
+                                    href="{{ route('dashboard') }}"
+                                >
+                                    Vuelve al Inicio
+                                </a>
+                            @endif
+
+
                         </div>
                     </form>
                 </div>

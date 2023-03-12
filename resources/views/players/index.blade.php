@@ -34,8 +34,14 @@
                 </a>
             </div>
         @endif
-        @if(Auth::check() && Auth::user()->roles_id != 1)
+        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2)
         <a href="{{ route('posts.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
+            Volver Al Inicio
+        </a>
+        @endif
+
+        @if(Auth::check() && Auth::user()->roles_id == 2)
+        <a href="{{ route('dashboard') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
@@ -61,13 +67,14 @@
                         <div class="flex"><p class="my-1 mr-2">CI:</p><p class='text-gray-500 font-[15px] my-1'>{{ $data[2] }}</p></div>
                         <div class="flex"><p class="my-1 mr-2">Edad:</p><p class='text-gray-500 font-[15px] my-1'>{{ $data[3] }}</p></div>
                         <div class="flex"><p class="my-1 mr-2">Correo:</p><p class='text-gray-500 font-[15px] my-1'>{{ $username }}</p></div>
-                        <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-                            Editar
-                        </a>
-                        <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-                            Eliminar
-                        </a>
-                        
+                        @if(Auth::check() && Auth::user()->roles_id == 1)
+                            <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                Editar
+                            </a>
+                            <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                Eliminar
+                            </a>
+                        @endif
                       </div>
                     </div>
                 </div>

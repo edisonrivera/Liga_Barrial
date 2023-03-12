@@ -32,7 +32,7 @@
             <!-- Col -->
             <div class="w-full lg:w-7/12 bg-green-300 p-5 rounded-lg lg:rounded-l-none bg-opacity-80">
                 <h3 class="pt-4 text-2xl text-center text-sky-900 font-bold">Formulario 📄</h3>
-                <form class="px-8 pt-6 pb-8 bg-sky-200 bg-opacity-10 rounded" method="POST" action="{{ route('presidentaso.register') }}">
+                <form class="px-8 pt-6 pb-8 bg-sky-200 bg-opacity-10 rounded" method="POST" action="{{ route('presidentaso.register') }}" enctype='multipart/form-data'>
                     @csrf
                     <div class="mb-4 md:flex md:justify-between">
                         <div class="mb-4 md:mr-2 md:mb-0">
@@ -83,6 +83,14 @@
                             name="email"
                             required
                         />
+                    </div>
+                    <div class="block mb-4">
+                        <div class="form-control w-full">
+                            <label class="label">
+                                <span class="block mb-2 text-sm font-bold text-gray-500">Imagen</span>
+                                <input type="file" class="file-input file-input-bordered w-full max-w-xs" name="president_image"/>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="mb-4 md:flex md:justify-between">

@@ -13,6 +13,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Collection;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Models\PresidentTeam;
+use App\Models\SoccerTeams;
+
 class PlayerAuthController extends Controller
 {
     public function create(){
@@ -56,7 +59,6 @@ class PlayerAuthController extends Controller
             'ci_player' => ['required', 'unique:players,ci_player', 'min:10', 'max:10'],
             'age' => ['required', 'numeric', 'min:18'],
             'born_date_player' => 'required|date',
-            'code_team' => 'required'
         ]);
 
         //! Mensajes de Error
@@ -80,7 +82,6 @@ class PlayerAuthController extends Controller
             'ci_player.min' => "CI Del Jugador Incorrecto",
             'ci_player.max' => "CI Del Jugador Incorrecto",
             'ci_player.unique' => "CI Ya Está En Uso",
-            'code_team.required' => "Escoga un Equipo para el Jugador",
             'age.required' => "El Jugador Tiene Que Ser Mayor De Edad",
             'age.min' => "El Jugador Tiene Que Ser Mayor De Edad",
             'born_date_player.required' => "Fecha de Nacimiento del Jugador Requerida",
@@ -94,6 +95,7 @@ class PlayerAuthController extends Controller
         $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_post']);
         $url = $result->getSecurePath();
         $public_id = $result->getPublicId();
+
 
         $user = User::create([
             'user_name' => $request->user_name,
@@ -111,15 +113,25 @@ class PlayerAuthController extends Controller
         $user_previous_created = User::where('email', $user->email)->get();
         $user_id = $user_previous_created[0]->id;
 
+
+        $loggedUser = Auth::user();
+        $loggedUserId = $loggedUser->id;
+        $presidentTeams = PresidentTeam::where('user_id', $loggedUserId)->pluck('id');
+        $team = SoccerTeams::where('president_team', $presidentTeams)->pluck('code_soccer_team')->values()[0];
+
         $player = Players::create([
             'ci_player' => $request->ci_player, 
             'user_id' => $user_id,
-            'code_team' => $request->input("code_team"),
+            'code_team' => $team,
             'age' => $request->age,
             'born_date_player' => $request->born_date_player,
         ]);       
 
         event(new Registered($player));
+
+        if(Auth::user()->roles_id == 2){
+            return redirect('/dashboard');
+        }
         return redirect('player/index')->with("message", "Jugador Creado ⚽");
     }
 }

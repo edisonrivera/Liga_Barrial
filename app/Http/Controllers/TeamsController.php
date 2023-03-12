@@ -13,11 +13,6 @@ class TeamsController extends Controller
 {
     public function index(){
         $teams = SoccerTeams::all();
-        
-        // $name_president = DB::table('president_teams')
-        //                     ->join('users', 'president_teams.id', '=', 'users.id')
-        //                     ->pluck('soccer_teams.name_team');
-                                
         return view('teams.index', ['teams' => $teams]);
     }
 
@@ -27,11 +22,6 @@ class TeamsController extends Controller
                         ->where('president_teams.status', 0)
                         ->join('users', 'users.id', '=', 'president_teams.user_id')
                         ->pluck('users.user_name', 'president_teams.id');
-
-        // $avatars = DB::table('president_teams')
-        //             ->join('users', 'users.id', '=', 'president_teams.user_id')
-        //             ->pluck('users.avatar');
-
 
         return view ('teams.create', ['presidents' => $presidents]);
     }

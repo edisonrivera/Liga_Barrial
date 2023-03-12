@@ -56,7 +56,9 @@
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Equipo</th>
-                    <th>Acciones</th>
+                    @if(Auth::check() && Auth::user()->roles_id == 1)
+                        <th>Acciones</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -85,14 +87,16 @@
                         <td>
                             {{ $data[1] }}
                         </td>
-                        <td>
-                            <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-                                Editar
-                            </a>
-                            <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-28 px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:bg-red-600 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-                                Eliminar
-                            </a>
-                        </td>
+                        @if(Auth::check() && Auth::user()->roles_id == 1)
+                            <td>
+                                <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                    Editar
+                                </a>
+                                <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-28 px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:bg-red-600 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                    Eliminar
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
