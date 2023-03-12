@@ -45,12 +45,12 @@ Route::get('/teams/index',[TeamsController::class, 'index'])->name('teams.index'
 //! ADMINISTRADOR
 Route::middleware(['auth', 'rol:1'])->group(function () {
     //? ====================================== PRESIDENTE EQUIPO ==========================================
-    Route::post('president/create', [presidentTeamController::class, 'store'])->name('president.register');
-    Route::get('president/create', [presidentTeamController::class, 'create'])->name('president.create');
+    // Route::post('president/create', [presidentTeamController::class, 'store'])->name('president.register');
+    // Route::get('president/create', [presidentTeamController::class, 'create'])->name('president.create');
 
     //? ========================================== EQUIPOS ================================================
-    Route::post('/teams/create',[TeamsController::class, 'store'])->name('teams.register');
-    Route::get('/teams/create',[TeamsController::class, 'create'])->name('teams.create');
+    // Route::post('/teams/create',[TeamsController::class, 'store'])->name('teams.register');
+    // Route::get('/teams/create',[TeamsController::class, 'create'])->name('teams.create');
 
     //? ========================================== ADMIN ================================================
     Route::get('/admin', [AdminController::class,'index'])->name('admin.index');

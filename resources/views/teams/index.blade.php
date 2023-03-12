@@ -33,26 +33,33 @@
                     <img src=" {{ url('/storage/add_team.png') }}"/>
                 </a>
             </div>
-        @endif
-        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2)
+        @endif 
+
+
+        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2 && Auth::user()->roles_id != 3)
         <a href="{{ route('posts.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
 
-        @if(Auth::check() && Auth::user()->roles_id == 2)
+        @if(Auth::check() && Auth::user()->roles_id == 2 || Auth::user()->roles_id == 3)
         <a href="{{ route('dashboard') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
-
-
 
         @guest
         <a href="{{ route('posts.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endguest
+        @if(Auth::check() && Auth::user()->roles_id == 3)
+            <div class="flex justify-end px-10">
+                <a href="{{ route('teams.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
+                    <img src=" {{ url('/storage/add_team.png') }}"/>
+                </a>
+            </div>
+        @endif
         <h1 class="font-bold text-3xl text-center text-gray-500 py-5">Equipos</h1>
         <div class='grid grid-cols-4 gap-1'>
         @if(count($teams) > 0)
@@ -65,7 +72,7 @@
                         <p class='font-bold text-gray-700 text-[22px] leading-7 mb-1 text-center'>{{ $team->name_team }}</p>
                         <div class='flex flex-row'><p class='text-[17px] font-bold text-[#0FB478] mt-2'>Lema</p></div>
                         <p class='text-gray-500 font-[15px] my-1 mb-20'>{{ $team->description_team }}</p>
-                        @if(Auth::check() && Auth::user()->roles_id == 1)
+                        @if(Auth::check() && Auth::user()->roles_id == 1 || Auth::user()->roles_id == 3)
                             <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
                                 Editar
                             </a>

@@ -28,19 +28,19 @@
                         </div>
                     </div>
                 @endif
-            <div class="flex justify-end px-10">
+            {{-- <div class="flex justify-end px-10">
                 <a href="{{ route('player.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
                     <img src=" {{ url('/storage/add_player.png') }}"/>
                 </a>
-            </div>
+            </div> --}}
         @endif
-        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2)
+        @if(Auth::check() && Auth::user()->roles_id != 1 && Auth::user()->roles_id != 2 && Auth::user()->roles_id != 3)
         <a href="{{ route('posts.index') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>
         @endif
 
-        @if(Auth::check() && Auth::user()->roles_id == 2)
+        @if(Auth::check() && Auth::user()->roles_id == 2 || Auth::user()->roles_id == 3)
         <a href="{{ route('dashboard') }}" class="btn btn-primary ml-5 mt-5 bg-green-500 hover:bg-green-400 border-none rounded-md">
             Volver Al Inicio
         </a>

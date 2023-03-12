@@ -45,7 +45,13 @@
         </a>
         @endguest
         
-
+        @if(Auth::check() && Auth::user()->roles_id == 3)
+        <div class="flex justify-end px-10">
+            <a href="{{ route('president.create') }}" class="btn btn-primary transition ease-in-out delay-150 bg-secondary hover:-translate-y-1 hover:scale-110 hover:bg-indigo-200 duration-100 my-10 h-20 border-none rounded-md">
+                <img src=" {{ url('/storage/add_president_team.png') }}"/>
+            </a>
+        </div>
+        @endif
         <h1 class="font-bold text-3xl text-center text-gray-500">Presidentes De Equipos</h1>
         @if(count($presidents_teams) > 0)
         <div class="overflow-x-auto w-full px-16 pt-4">
@@ -56,7 +62,7 @@
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Equipo</th>
-                    @if(Auth::check() && Auth::user()->roles_id == 1)
+                    @if(Auth::check() && Auth::user()->roles_id == 1 || Auth::user()->roles_id == 3)
                         <th>Acciones</th>
                     @endif
                 </tr>
@@ -87,7 +93,7 @@
                         <td>
                             {{ $data[1] }}
                         </td>
-                        @if(Auth::check() && Auth::user()->roles_id == 1)
+                        @if(Auth::check() && Auth::user()->roles_id == 1 || Auth::user()->roles_id == 3)
                             <td>
                                 <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
                                     Editar

@@ -8,7 +8,7 @@ use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rule;
 use App\Models\PresidentTeam;
-
+use Illuminate\Support\Facades\Auth;
 class TeamsController extends Controller
 {
     public function index(){
@@ -75,6 +75,7 @@ class TeamsController extends Controller
         PresidentTeam::where('id','=', $president_id)->update(['status' => 1]);
 
         event(new Registered($soccer_team));
+        
         return redirect('/teams/index')->with("message", "Equipo Creado! ⚽");
     }
 }
