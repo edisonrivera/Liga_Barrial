@@ -21,6 +21,7 @@ class SoccerTeams extends Model
         'president_team',
         'name_team',
         'logo_team',
+        'public_id',
         'fundation_date_team',
         'description_team' ,
     ];

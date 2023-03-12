@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('soccer_teams', function (Blueprint $table){
-            $table->string('code_soccer_team',10)->primary()->unique();
+            $table->string('code_soccer_team',10)->primary()->unique()->unique();
             $table->string('name_team');
-            $table->unsignedBigInteger('president_team')->unique();
+            $table->unsignedBigInteger('president_team')->nullable();
             $table->string('logo_team');
+            $table->string('public_id');
             $table->date('fundation_date_team');
             $table->string('description_team');
             $table->tinyInteger('puntaje_team')->default(0)->unsigned();
@@ -31,7 +32,7 @@ return new class extends Migration
             $table->foreign('president_team')
                   ->references('id')
                   ->on('president_teams')
-                  ->onDelete('cascade')
+                  ->onDelete('set null')
                   ->onUpdate('cascade');
         });
     }

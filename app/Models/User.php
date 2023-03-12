@@ -27,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'nickname_user',
         'roles_id',
-        'image'
+        'avatar',
+        'public_id'
     ];
 
     /**
@@ -57,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
     // RELACIÓN DE UNO A UNO
     public function presidentTeam()
     {
-        return $this->hasOne(PresidentTeam::class);
+        return $this->hasOne(PresidentTeam::class, 'id', 'user_id');
     }
     // RELACIÓN DE UNO A UNOs
     public function players()

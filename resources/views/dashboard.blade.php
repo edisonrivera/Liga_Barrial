@@ -9,6 +9,7 @@
                     {{ __("Bienvenido") }} {{ Auth::user()->user_name }} !
                 </div>
             </div>
+            
         </div>
     </div>
 </x-app-layout>

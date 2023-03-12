@@ -47,17 +47,32 @@
         @endguest
         <h1 class="font-bold text-3xl text-center text-gray-500 py-5">Jugadores</h1>
         @if (count($players) > 0)
-            @foreach ($players as $email_player => $user_name_player)
-                <div class="p-12 mx-12">      
-                    <div class="card h-96 card-side glass hover:backdrop-saturate-50 hover:bg-white/30 hover:text-neutral-700 shadow-xl w-full">        
-                        <figure><img class="w-64 h-64 pl-4 rounded-lg " src="22"  alt="image" /></figure>        
-                        <div class="card-body py-4 w-1/2 px-8">            
-                            <h2 class="card-title italic text-2xl hover:text-stone-900">{{ $user_name_player}}</h2>            
-                            <p class="hover:text-stone-900 italic text-xl">{{ $email_player }}</p>            
-                        </div>            
-                    </div>    
+            <div class='grid grid-cols-4 gap-1'>
+            @foreach ($players as $username => $data)
+                <div class='w-96 max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden'>
+                    <div class='max-w-md mx-auto'>
+                      <div class='h-[200px]' style='background-image:url({{ $data[1] }});background-size:cover;background-position:center'>
+                        </div>
+                      <div class='p-4 sm:p-6'>
+                        <p class='font-bold text-gray-700 text-[22px] leading-7 mb-1 text-center'>{{ $data[0] }}</p>
+                        <div class='flex flex-row'>
+                          <p class='text-[17px] font-bold text-[#0FB478] mt-2'>Datos Personales</p>
+                        </div>
+                        <div class="flex"><p class="my-1 mr-2">CI:</p><p class='text-gray-500 font-[15px] my-1'>{{ $data[2] }}</p></div>
+                        <div class="flex"><p class="my-1 mr-2">Edad:</p><p class='text-gray-500 font-[15px] my-1'>{{ $data[3] }}</p></div>
+                        <div class="flex"><p class="my-1 mr-2">Correo:</p><p class='text-gray-500 font-[15px] my-1'>{{ $username }}</p></div>
+                        <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                            Editar
+                        </a>
+                        <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                            Eliminar
+                        </a>
+                        
+                      </div>
+                    </div>
                 </div>
-            @endforeach            
+            @endforeach 
+            </div>
         @else
             <h3 class="font-bold text-3xl text-center text-red-500 py-20">No existen Jugadores Aún 🛑</h3>
         @endif

@@ -22,7 +22,7 @@ class PresidentTeam extends Model
     // RELACIÓN DE UNO A UNO
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id');
     }
 
     // RELACIÓN DE UNO A UNO

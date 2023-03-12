@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\SoccerTeams;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\SoccerTeam;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rule;
@@ -13,7 +12,12 @@ use App\Models\PresidentTeam;
 class TeamsController extends Controller
 {
     public function index(){
-        $teams = DB::table('soccer_teams')->pluck('name_team', 'description_team');
+        $teams = SoccerTeams::all();
+        
+        // $name_president = DB::table('president_teams')
+        //                     ->join('users', 'president_teams.id', '=', 'users.id')
+        //                     ->pluck('soccer_teams.name_team');
+                                
         return view('teams.index', ['teams' => $teams]);
     }
 
@@ -23,6 +27,12 @@ class TeamsController extends Controller
                         ->where('president_teams.status', 0)
                         ->join('users', 'users.id', '=', 'president_teams.user_id')
                         ->pluck('users.user_name', 'president_teams.id');
+
+        // $avatars = DB::table('president_teams')
+        //             ->join('users', 'users.id', '=', 'president_teams.user_id')
+        //             ->pluck('users.avatar');
+
+
         return view ('teams.create', ['presidents' => $presidents]);
     }
 
@@ -32,10 +42,11 @@ class TeamsController extends Controller
         $fields = ([
             'code_soccer_team' => ['required', 'string', 'max:10', 'unique:soccer_teams'],
             'name_team' => ['required', 'string', 'max:20'],
-            # 'logo_team' => 'required'| 'mimes:jpeg,png,svg,jpg',
+            'logo_team' => ['required', 'image'],
             'fundation_date_team' => 'required|date',
             'description_team' => 'required|string|min:10|max:255',
         ]);
+
         //! Mensajes de Error
         $messages = [
             'code_soccer_team.required' => "El equipo debe tener código",
@@ -43,8 +54,8 @@ class TeamsController extends Controller
             'code_soccer.max' => "Código de Equipo debe contener máximo 10 caracteres",
             'name_team.max' => "El nombre de quipo debe ser máximo de 50 caracteres",
             'name_team.required' => "El nombre de equipo es requerido",
-            #'logo_team.required' => "El equipo debe tener un logo",
-            #'logo_team.mimes' => "El logo debe ser tipo svg, png, jpg o jpeg",
+            'logo_team.required' => "El equipo debe tener un logo",
+            'logo_team.image' => "El logo debe ser tipo svg, png, jpg o jpeg",
             'fundation_date_team.required' => "Se requiere la fecha de fundación del equipo",
             'description_team.required' => "Falta la descripción del equipo",
             'description_team.max' => "Descripción de Equipo debe contener menos de 256 caracteres",
@@ -53,18 +64,17 @@ class TeamsController extends Controller
 
         $this->validate($request, $fields, $messages);
 
-        //imagen con Cloudinary
-        // $image = request()->file('logo_team');
-        // $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_posts',
-        //                                 'public_id'=>uniqid()]);
-        // $url = $result->getSecurePath();
-        
+        $image = request()->file('logo_team');
+        $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_post']);
+        $url = $result->getSecurePath();
+        $public_id = $result->getPublicId();
 
         $soccer_team = SoccerTeams::create([
             'code_soccer_team' => $request->code_soccer_team,
             'name_team' => $request->name_team,
             'president_team' => $request->input("president_team"),
-            'logo_team' => 'cloudinary/12312312312',
+            'logo_team' => $url,
+            'public_id' => $public_id,
             'fundation_date_team' => $request->fundation_date_team,
             'description_team' => $request->description_team
         ]);

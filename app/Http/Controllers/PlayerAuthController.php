@@ -11,7 +11,8 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Collection;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 class PlayerAuthController extends Controller
 {
     public function create(){
@@ -22,9 +23,23 @@ class PlayerAuthController extends Controller
     public function index(){
         $players = DB::table('players')
                         ->join('users', 'users.id', '=', 'players.user_id')
-                        ->pluck('users.user_name', 'users.email');
+                        ->pluck(DB::raw("CONCAT(users.user_name, ' ', users.surname_user) AS full_name"), 'users.email');
 
-        return view('players.index', ['players' => $players]);
+        $images = DB::table('users')
+                        ->join('players', 'players.user_id', '=', 'users.id')
+                        ->pluck('users.avatar');
+
+        $player_ci = DB::table('players')->pluck('ci_player');
+        $player_age = DB::table('players')->pluck('age');
+
+        $data_show = new Collection();
+        $init = 0;
+        foreach($players as $user_name => $email){
+            $data_show->put($user_name, [$email, $images[$init], $player_ci[0], $player_age[0]]);
+            $init++;
+        };
+
+        return view('players.index', ['players' => $data_show]);
     }
 
 
@@ -36,6 +51,7 @@ class PlayerAuthController extends Controller
             'nickname_user' => ['required', 'string', 'max:10', 'min:5'],
             'surname_user' => ['required', 'alpha', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'image_player' => ['required', 'image'],
             'password' => ['required', 'confirmed', 'min:8' ,Rules\Password::defaults()],
             'ci_player' => ['required', 'unique:players,ci_player', 'min:10', 'max:10'],
             'age' => ['required', 'numeric', 'min:18'],
@@ -68,17 +84,16 @@ class PlayerAuthController extends Controller
             'age.required' => "El Jugador Tiene Que Ser Mayor De Edad",
             'age.min' => "El Jugador Tiene Que Ser Mayor De Edad",
             'born_date_player.required' => "Fecha de Nacimiento del Jugador Requerida",
+            'image_player.required' => "El Presidente debe tener un logo",
+            'image_player.image' => "El logo debe ser tipo svg, png, jpg o jpeg"
         ];
 
         $this->validate($request, $fields, $messages);
 
-        if($request->image){
-            $image = $request->image;
-            $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_posts','public_id'=>uniqid()]);
-            $url = $result->getSecurePath();
-        }else{
-            $url=null;
-        }
+        $image = request()->file('image_player');
+        $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_post']);
+        $url = $result->getSecurePath();
+        $public_id = $result->getPublicId();
 
         $user = User::create([
             'user_name' => $request->user_name,
@@ -86,19 +101,20 @@ class PlayerAuthController extends Controller
             'surname_user' => $request->surname_user,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image' => $url,
+            'avatar' => $url,
+            'public_id' => $public_id,
             'roles_id' => 4 //? 4 -> Jugador
         ]);
 
         event(new Registered($user));
 
-        $user_previous_created = User::where('email', $user->email);
-        $user_id = $user->id;
+        $user_previous_created = User::where('email', $user->email)->get();
+        $user_id = $user_previous_created[0]->id;
 
         $player = Players::create([
             'ci_player' => $request->ci_player, 
             'user_id' => $user_id,
-            'code_team' => $request->input("teams"),
+            'code_team' => $request->input("code_team"),
             'age' => $request->age,
             'born_date_player' => $request->born_date_player,
         ]);       

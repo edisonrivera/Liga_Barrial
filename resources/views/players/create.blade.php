@@ -32,7 +32,7 @@
                 
                 <div class="w-full lg:w-7/12 bg-sky-200 p-5 rounded-lg lg:rounded-l-none bg-opacity-80">
                     <h3 class="pt-4 text-2xl text-center text-sky-900 font-bold">Formulario de Registro ⚽</h3>
-                    <form class="px-8 pt-6 pb-8 bg-sky-200 bg-opacity-10 rounded" method="POST" action="{{ route('player.register') }}">
+                    <form class="px-8 pt-6 pb-8 bg-sky-200 bg-opacity-10 rounded" method="POST" action="{{ route('player.register') }}" enctype='multipart/form-data'>
                         @csrf
                         <div class="mb-4 md:flex md:justify-between">
                             <div class="mb-4 md:mr-2 md:mb-0">
@@ -116,7 +116,7 @@
                             <div class="form-control w-full">
                                 <label class="label">
                                     <span class="block mb-2 text-sm font-bold text-gray-500">Escoge una Imagen</span>
-                                    <input type="file" class="file-input file-input-bordered w-full max-w-xs" name="image"/>
+                                    <input type="file" class="file-input file-input-bordered w-full max-w-xs" name="image_player"/>
                                 </label>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                             </div>
                         </div>  
                         <div class="mb-4 md:flex md:justify-center">
-                            <select name="teams" class="select select-info w-full max-w-xs bg-white text-black">
+                            <select name="code_team" class="select select-info w-full max-w-xs bg-white text-black">
                                 <option disabled selected>Equipo al que pertenece</option>
                                 @foreach ($teams as $code_soccer_team => $name_team)
                                     <option value="{{ $code_soccer_team }}">{{ $name_team }}</option>

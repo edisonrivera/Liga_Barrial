@@ -48,34 +48,34 @@
 
         <h1 class="font-bold text-3xl text-center text-gray-500">Presidentes De Equipos</h1>
         @if(count($presidents_teams) > 0)
-        <div class="overflow-x-auto w-full px-10 pt-4">
+        <div class="overflow-x-auto w-full px-16 pt-4">
             <table class="table w-full">
             <thead>
                 <tr>
-                <th></th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Equipo</th>
-                <th>Acciones</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Equipo</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($presidents_teams as $user_name => $data)
                     <tr>
                         <td>
-                            <div class="flex items-center space-x-3 px-10">
+                            {{-- <div class="flex pl-8"> --}}
                                 <div class="avatar">
-                                    <div class="mask mask-squircle w-12 h-12">
-                                    <img src="/tailwind-css-component-profile-2@56w.png"/>
+                                    <div class="mask mask-squircle w-32 h-32">
+                                    <img src="{{ $data[2] }}"/>
                                     </div>
                                 </div>
                             
-                            </div>
+                            {{-- </div> --}}
                         </td>
                         <td>
                             {{ $data[0] }}
                             <br/>
-                            <span class="badge badge-primary bagde-md badge-sm bg-color-secondary">Presidente de $Equipo</span>
+                            <span class="badge badge-primary bagde-md badge-sm bg-color-secondary">Presidente de Equipo</span>
                         </td>
                         <td>
                             <div>
@@ -86,7 +86,12 @@
                             {{ $data[1] }}
                         </td>
                         <td>
-                            <button class="btn btn-ghost btn-xs">$Acciones</button>
+                            <a target='_blank' href='foodiesapp://food/1001' class='block mt-3 w-28 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-blue-400 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                Editar
+                            </a>
+                            <a target='_blank' href="https://apps.apple.com/us/app/id1493631471" class='block mt-1.5 w-28 px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] bg-red-500 hover:bg-red-600 hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 @endforeach
