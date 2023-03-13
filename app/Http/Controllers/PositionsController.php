@@ -25,7 +25,8 @@ class PositionsController extends Controller
            Position::updatePositions($match);
        }
 
-       return redirect()->route('positions.index');
+       //return redirect()->route('positions.index');
+       return redirect('positions.index');
    }
 }
 
