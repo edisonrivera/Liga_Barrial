@@ -9,6 +9,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rule;
 use App\Models\PresidentTeam;
 use Illuminate\Support\Facades\Auth;
+
+
+
+
 class TeamsController extends Controller
 {
     public function index(){
@@ -30,8 +34,8 @@ class TeamsController extends Controller
     {
         //! Registro: Usuario
         $fields = ([
-            'code_soccer_team' => ['required', 'string', 'max:10', 'unique:soccer_teams'],
-            'name_team' => ['required', 'string', 'max:20'],
+            'code_soccer_team' => ['required', 'string', 'max:15', 'unique:soccer_teams'],
+            'name_team' => ['required', 'string', 'max:25'],
             'logo_team' => ['required', 'image'],
             'fundation_date_team' => 'required|date',
             'description_team' => 'required|string|min:10|max:255',
@@ -41,8 +45,8 @@ class TeamsController extends Controller
         $messages = [
             'code_soccer_team.required' => "El equipo debe tener código",
             'code_soccer_team.unique' => "Código de Equipo ya en uso",
-            'code_soccer.max' => "Código de Equipo debe contener máximo 10 caracteres",
-            'name_team.max' => "El nombre de quipo debe ser máximo de 50 caracteres",
+            'code_soccer.max' => "Código de Equipo debe contener máximo 15 caracteres",
+            'name_team.max' => "El nombre de quipo debe ser máximo de 25 caracteres",
             'name_team.required' => "El nombre de equipo es requerido",
             'logo_team.required' => "El equipo debe tener un logo",
             'logo_team.image' => "El logo debe ser tipo svg, png, jpg o jpeg",
@@ -58,9 +62,12 @@ class TeamsController extends Controller
         $result = Cloudinary::upload($image->getRealPath(),['folder'=>'my_post']);
         $url = $result->getSecurePath();
         $public_id = $result->getPublicId();
+        $number_rows = SoccerTeams::count();
+
+
 
         $soccer_team = SoccerTeams::create([
-            'code_soccer_team' => $request->code_soccer_team,
+            'code_soccer_team' => strval($number_rows + 1) . $request->code_soccer_team,
             'name_team' => $request->name_team,
             'president_team' => $request->input("president_team"),
             'logo_team' => $url,

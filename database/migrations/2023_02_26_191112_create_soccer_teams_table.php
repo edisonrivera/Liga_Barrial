@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('soccer_teams', function (Blueprint $table) {
-            $table->string('code_soccer_team',10)->primary();
+
+        Schema::create('soccer_teams', function (Blueprint $table){
+            $table->string('code_soccer_team',20)->primary()->unique()->unique();
+
             $table->string('name_team');
             $table->unsignedBigInteger('president_team')->unique();
             $table->string('logo_team');

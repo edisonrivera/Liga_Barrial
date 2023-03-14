@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Roles extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public function user(){
         return $this->hasMany(User::class);

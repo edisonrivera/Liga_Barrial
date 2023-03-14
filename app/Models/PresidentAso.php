@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class PresidentAso extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     /**
      * The "type" of the auto-incrementing ID.
      *

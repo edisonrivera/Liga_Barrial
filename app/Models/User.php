@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'image'
     ];
 
+    public $timestamps = false;
     /**
      * The attributes that should be hidden for serialization.
      *

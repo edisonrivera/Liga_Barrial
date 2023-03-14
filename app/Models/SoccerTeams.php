@@ -15,6 +15,7 @@ class SoccerTeams extends Model
      */
     protected $table='soccer_teams';
     protected $keyType='string';
+    public $timestamps = false;
 
     protected $fillable = [
         'code_soccer_team',
