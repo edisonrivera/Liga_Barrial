@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             $table->string('ci_player')->primary();
-            $table->unsignedBigInteger('user_id')->unique()->nullable();
+            $table->unsignedBigInteger('user_id')->unique();
             $table->string('code_team',10);
             $table->tinyInteger('age')->unsigned();
             $table->date('born_date_player');

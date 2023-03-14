@@ -27,7 +27,7 @@ class Players extends Model
     protected $fillable = [
         'ci_player', 
         'user_id', 
-        'code_team',
+        'code_team', 
         'age', 
         'born_date_player'
     ];

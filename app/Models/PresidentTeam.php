@@ -19,11 +19,11 @@ class PresidentTeam extends Model
     *
     * @var string
     */
-    protected $fillable = ['user_id', 'status'];
+    protected $fillable = ['user_id'];
     // RELACIÓN DE UNO A UNO
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class);
     }
 
     // RELACIÓN DE UNO A UNO

@@ -16,13 +16,29 @@ return new class extends Migration
             $table->unsignedBigInteger('matches_id');
             $table->string('code_team_visit',10);
             $table->string('code_team_local',10);
+            $table->tinyInteger('goals_local')->unsigned()->default(0);
+            $table->tinyInteger('goals_visit')->unsigned()->default(0);
+            $table->date('date_match');
+            $table->time('time_match');
 
             $table->foreign('matches_id')
                   ->references('id')
                   ->on('matches')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
+            /*
+            $table->foreign('goals_local')
+                  ->references('goals_local')
+                  ->on('matches')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
 
+            $table->foreign('goals_visit')
+                  ->references('goals_visit')
+                  ->on('matches')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            */
             $table->foreign('code_team_visit')
                   ->references('code_soccer_team')
                   ->on('soccer_teams')
@@ -34,8 +50,23 @@ return new class extends Migration
                   ->on('soccer_teams')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
+            /*
+            $table->foreign('date_match')
+                  ->references('date_match')
+                  ->on('matches')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+
+            $table->foreign('time_match')
+                  ->references('time_match')
+                  ->on('matches')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            */
             $table->timestamps();
         });
+
+    
     }
 
     /**
@@ -43,6 +74,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matches_tournament');
+        Schema::dropIfExists('matches_teams');
     }
 };
